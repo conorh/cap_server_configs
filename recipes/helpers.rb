@@ -36,14 +36,14 @@ module CapServerConfigs
         local_file = File.read(local_path)
         remote_path = (local_file.match(/#\s*location:\s*(.+)$/)[1] rescue nil)
         if remote_path.nil? or remote_path.length == 0
-          puts "Could not find location: setting in configuration file #{local_path}"
+          puts "\033[31mCould not find location: setting in configuration file #{local_path}\033[0m"
           next
         end
 
         remote_file = cap.capture("cat #{remote_path}", :hosts => @host)
 
         if !compare_files(local_file, remote_file)
-          modified_files << {:local => local_file, :remote => remote_file, :local_path => local_path, :remote_path => remote_path}
+          modified_files << {:local_file => local_file, :remote_file => remote_file, :local_path => local_path, :remote_path => remote_path}
         end
       end
 
@@ -51,21 +51,22 @@ module CapServerConfigs
     end
 
     def replace_remote_file(local_file, remote_path)
-      puts "replacing remote file #{remote_path}"
-      cap.put(local_file, remote_path, :host => @host)
+      puts "\033[32mreplacing remote file #{remote_path}\033[0m"
+      cap.put(strip_cap_server_config_commands(local_file), "/tmp/remote_config", :hosts => @host)
+      cap.run("sudo cp /tmp/remote_config #{remote_path}", :hosts => @host)
     end
 
     def create_remote_backup(remote_file_path)
       backup_file_path = remote_file_path + ".cap_bak"
-      puts "saving backup of #{remote_file_path} to #{backup_file_path}"
-      cap.run("cp #{remote_file_path} #{backup_file_path}", :hosts => @host)
+      puts "\033[32msaving backup of #{remote_file_path} to #{backup_file_path}\033[0m"
+      cap.run("sudo cp #{remote_file_path} #{backup_file_path}", :hosts => @host)
     end
 
     def restart_service(local_file)
       restart_command = (local_file.match(/#\s*restart:\s*(.+)$/)[1] rescue nil)
       if restart_command
-        puts "restarting remote service"
-        cap.run(remote_command, :hosts => @host)
+        puts "\033[32mrestarting remote servicee[0m"
+        cap.run("#{sudo} #{remote_command}", :hosts => @host)
       end
     end
   end

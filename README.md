@@ -16,7 +16,7 @@ it has changed it replaces the remote file and runs a restart command, also spec
 
     # restart: sudo /etc/init.d/mysql restart
 
-There is also a capistrano task service_configs:check that will check each file to see if it has changed, and
+There is also a capistrano task service_configs:update that will check each file to see if it has changed, and
 output a diff of the changes, but not replace the file.
 
 INSTALLATION
@@ -62,7 +62,7 @@ Check for modified server configurations. Report them, and output a diff, but do
 
 Check for modified server configurations. Replace them and restart services for any that were replaced (and that have a replace: line)
 
-    cap production server_configs:replace
+    cap production server_configs:update
 
 COPYRIGHT
 ---------
