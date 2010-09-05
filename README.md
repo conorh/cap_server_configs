@@ -24,9 +24,9 @@ INSTALLATION
 ------------
 
     # FROM RAILS_ROOT
-    ruby script/plugin install git://github.com/conorh/cap_crontab.git
+    ruby script/plugin install git://github.com/conorh/cap_server_configs.git
 
-Create a directory in config/ named servers/ and create directories for each server you want to manage. Example:
+Create a directory in config/ named servers/ and create directories for each server you want to manage. The hostname reported by the server when you do 'hostname' should *exactly* match the name of each directory in servers. Example structure:
 
     config/
       servers/
