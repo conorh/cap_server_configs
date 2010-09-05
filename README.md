@@ -11,13 +11,18 @@ then contains a line with the location of the file on that server:
 
      ... rest of configuration file
 
-The capistrano task server_configs:replace then compares the remote file at that location to the local file. If 
+The capistrano task server_configs:replace then compares the remote file at that location to the local file. If
 it has changed it replaces the remote file and runs a restart command, also specified in the configuration file:
 
     # restart: sudo /etc/init.d/mysql restart
 
-There is also a capistrano task service_configs:update that will check each file to see if it has changed, and
-output a diff of the changes, but not replace the file.
+There is also a capistrano task service_configs:update that will check each file to see if it has changed, and output a diff of the changes, but not replace the file.
+
+PREREQUISITES
+-------------
+
+The script assumes you have capistrano of course, and it also uses the command 'diff' to output
+diffs of local and remote files (command is required locally).
 
 INSTALLATION
 ------------
@@ -60,9 +65,14 @@ Check for modified server configurations. Report them, and output a diff, but do
 
     cap production server_configs:check
 
-Check for modified server configurations. Replace them and restart services for any that were replaced (and that have a replace: line)
+Check for modified server configurations. Replace them with the local version and restart
+services for any that were replaced (and that have a # restart: line)
 
     cap production server_configs:update
+
+Check for modified server configurations. Replace the local version with the server version.
+
+   cap production server_configs:update_local
 
 COPYRIGHT
 ---------

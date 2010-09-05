@@ -1,7 +1,20 @@
 require File.dirname(__FILE__) + '/helpers'
 
 namespace :server_configs do
-  desc "Check for modified configuration files, replace them with the local version and restart services"
+
+  desc "Check for modified configuration files, replace the local version with the remote version"
+  task :update_local, :only => { :manage_configs => true } do
+    helper = CapServerConfigs::Helper.new(self)
+    helper.get_cap_hosts.each do |host|
+      helper.host = host
+      helper.get_modified_config_files.each do |file_info|
+        puts "\033[33m#{file_info[:local_path]} differs from #{file_info[:remote_path]}\033[0m\n"
+        helper.replace_local_file(file_info[:local_path], file_info[:remote_file])
+      end
+    end
+  end
+
+  desc "Check for modified configuration files, replace the server version with the local version and restart services"
   task :update, :only => { :manage_configs => true } do
     helper = CapServerConfigs::Helper.new(self)
     helper.get_cap_hosts.each do |host|

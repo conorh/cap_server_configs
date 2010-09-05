@@ -52,21 +52,34 @@ module CapServerConfigs
 
     def replace_remote_file(local_file, remote_path)
       puts "\033[32mreplacing remote file #{remote_path}\033[0m"
-      cap.put(strip_cap_server_config_commands(local_file), "/tmp/remote_config", :hosts => @host)
+      cap.put(strip_cap_server_config_commands(local_file).gsub("\r\n","\n"), "/tmp/remote_config", :hosts => @host)
       cap.run("sudo cp /tmp/remote_config #{remote_path}", :hosts => @host)
     end
 
+    def replace_local_file(local_file_path, remote_file)
+      local_file = File.read(local_file_path)
+      location = (local_file.match(/#\s*location:\s*(.+)\n/)[1] rescue nil)
+      restart_command = (local_file.match(/#\s*restart:\s*(.+)\n/)[1] rescue nil)
+  
+      puts "\033[32mreplacing local file #{local_file_path}\033[0m"
+      File.open(local_file_path, "w") do |f| 
+        f.print("# location: #{location}\n") if location
+        f.print("# restart: #{restart_command}\n") if restart_command
+        f << remote_file.gsub("\r\n","\n")
+      end
+    end
+
     def create_remote_backup(remote_file_path)
-      backup_file_path = remote_file_path + ".cap_bak"
+      backup_file_path = "/tmp/#{File.basename remote_file_path}"
       puts "\033[32msaving backup of #{remote_file_path} to #{backup_file_path}\033[0m"
-      cap.run("sudo cp #{remote_file_path} #{backup_file_path}", :hosts => @host)
+      cap.run("sudo cp #{remote_file_path} /tmp/#{backup_file_path}", :hosts => @host)
     end
 
     def restart_service(local_file)
       restart_command = (local_file.match(/#\s*restart:\s*(.+)$/)[1] rescue nil)
       if restart_command
-        puts "\033[32mrestarting remote service[0m"
-        cap.run("sudo #{remote_command}", :hosts => @host)
+        puts "\033[32mrestarting remote service\033[0m"
+        cap.run("#{restart_command}", :hosts => @host)
       end
     end
   end
