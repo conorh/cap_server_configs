@@ -65,8 +65,8 @@ module CapServerConfigs
     def restart_service(local_file)
       restart_command = (local_file.match(/#\s*restart:\s*(.+)$/)[1] rescue nil)
       if restart_command
-        puts "\033[32mrestarting remote servicee[0m"
-        cap.run("#{sudo} #{remote_command}", :hosts => @host)
+        puts "\033[32mrestarting remote service[0m"
+        cap.run("sudo #{remote_command}", :hosts => @host)
       end
     end
   end
