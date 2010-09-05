@@ -71,7 +71,7 @@ services for any that were replaced (and that have a # restart: line)
 
 Check for modified server configurations. Replace the local version with the server version.
 
-   cap production server_configs:update_local
+    cap production server_configs:update_local
 
 COPYRIGHT
 ---------
