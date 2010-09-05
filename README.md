@@ -1,8 +1,7 @@
 Capistrano Server Configs
 =========================
 
-Simplest possible way to manage, deploy and version your server configuration files (nginx, mysql, apache etc.)
-in your repository.
+Simplest possible way to manage, deploy and version your server configuration files (nginx, mysql, apache etc.) from your Rails repository.
 
 Store your configuration files in config/servers/some.server.com/. The hostname reported by the server when you do 'hostname' should exactly match the name of the directory. Each configuration file should contain the location of the file on that server on a line like this: 
 
