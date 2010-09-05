@@ -34,10 +34,10 @@ environment where you want to install a crontab:
 
 Example config file:
 
-  # location: /etc/my.cnf
-  # restart: sudo /etc/init.d/mysql restart
-  
-  ... rest of configuration file
+    # location: /etc/my.cnf
+    # restart: sudo /etc/init.d/mysql restart
+    
+    ... rest of configuration file
 
 In your deploy file add the :manage_server_configs => true flag on the server(s) where you'd
 like this task run
@@ -48,7 +48,8 @@ like this task run
       role :db,                   'example.com', :primary => true
     end
 
-== USAGE
+USAGE
+-----
 
 Check for modified server configurations. Report them, but do not restart any services.
 
@@ -58,7 +59,8 @@ Check for modified server configurations. Replace them and restart services for 
 
     cap production server_configs:replace
 
-== COPYRIGHT
+COPYRIGHT
+---------
 
 Copyright (c) 2010 Conor Hunt <conor.hunt AT gmail>
 Released under the MIT license
