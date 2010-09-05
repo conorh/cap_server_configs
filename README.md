@@ -9,11 +9,11 @@ Store your configuration files in config/servers/some.server.com/. The hostname 
 
      ... rest of configuration file
 
-The capistrano task server_configs:replace then compares the remote file at that location to the local file. If it has changed it replaces the remote file and runs a restart command, also specified in the configuration file:
+The capistrano task server_configs:update then compares the remote file at that location to the local file. If it has changed it replaces the remote file and runs a restart command, also specified in the configuration file:
 
     # restart: sudo /etc/init.d/mysql restart
 
-There is also a capistrano task service_configs:update that will check each file to see if it has changed, and output a diff of the changes, but not replace the file.
+There is also a capistrano task service_configs:check that will check each file to see if it has changed, and output a diff of the changes, but not replace the file.
 
 PREREQUISITES
 -------------
