@@ -58,7 +58,7 @@ module CapServerConfigs
     def create_remote_backup(remote_file_path)
       backup_file_path = remote_file_path + ".cap_bak"
       puts "saving backup of #{remote_file_path} to #{backup_file_path}"
-      cap.run('cp #{remote_file_path} #{backup_file_path}', :hosts => @host)
+      cap.run("cp #{remote_file_path} #{backup_file_path}", :hosts => @host)
     end
 
     def restart_service(local_file)
