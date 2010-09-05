@@ -26,16 +26,20 @@ INSTALLATION
     # FROM RAILS_ROOT
     ruby script/plugin install git://github.com/conorh/cap_crontab.git
 
-Create a directory in config/ named crontabs/ and create crontab files for each environment where you want to install a crontab:
+Create a directory in config/ named servers/ and create directories for each server you want to manage. Example:
 
     config/
       servers/
-        server1/
+        server1.domain.com/
           my.cnf
           nginx.conf
           monit/
             mysql.conf
             nginx.conf
+        server2.domain.com/
+          redis.conf
+          logrotate/
+             rails
 
 Example config file:
 
