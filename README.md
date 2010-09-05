@@ -4,15 +4,13 @@ Capistrano Server Configs
 Simplest possible way to manage, deploy and version your server configuration files (nginx, mysql, apache etc.)
 in your repository.
 
-Store your configuration files in config/servers/some.server.com/ or a subdirectory. Each configuration file
-then contains a line with the location of the file on that server:
+Store your configuration files in config/servers/some.server.com/. The hostname reported by the server when you do 'hostname' should exactly match the name of the directory. Each configuration file should contain the location of the file on that server on a line like this: 
 
      # location: /etc/my.cnf
 
      ... rest of configuration file
 
-The capistrano task server_configs:replace then compares the remote file at that location to the local file. If
-it has changed it replaces the remote file and runs a restart command, also specified in the configuration file:
+The capistrano task server_configs:replace then compares the remote file at that location to the local file. If it has changed it replaces the remote file and runs a restart command, also specified in the configuration file:
 
     # restart: sudo /etc/init.d/mysql restart
 
@@ -21,8 +19,7 @@ There is also a capistrano task service_configs:update that will check each file
 PREREQUISITES
 -------------
 
-The script assumes you have capistrano of course, and it also uses the command 'diff' to output
-diffs of local and remote files (command is required locally).
+The script assumes you have capistrano of course, and it also uses the command 'diff' to output diffs of local and remote files (command is required locally).
 
 INSTALLATION
 ------------
@@ -30,8 +27,7 @@ INSTALLATION
     # FROM RAILS_ROOT
     ruby script/plugin install git://github.com/conorh/cap_crontab.git
 
-Create a directory in config/ named crontabs/ and create crontab files for each
-environment where you want to install a crontab:
+Create a directory in config/ named crontabs/ and create crontab files for each environment where you want to install a crontab:
 
     config/
       servers/
