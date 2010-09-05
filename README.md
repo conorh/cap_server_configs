@@ -3,9 +3,9 @@ Capistrano Server Configs
 
 Simplest possible way of managing and versioning your server configuration files in your repository.
 
-Capistrano recipe for managing configuration files on your servers. Assumes you have stored your configuration files
-in config/servers/hostname_of_server/ or a subdirectory. Each configuration file then contains a line specifying the
-location of the file on that server, ex.
+Assumes you have stored your configuration files in config/servers/hostname_of_server/ or a subdirectory. 
+Each configuration file then contains a line specifying the location of the file on the server matching
+that hostname, ex.
    
      # location: /etc/my.cnf
 
